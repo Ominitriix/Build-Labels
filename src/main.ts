@@ -13,8 +13,12 @@ interface DataList {
 }
 
 // Limitar quantidade de itens por vez
-let countStart = 0,
-  countEnd = 21;
+let countEnd: number = 42;
+
+let dataList: DataList = {
+  name: "",
+  downloads: [],
+};
 
 inputUrl();
 
@@ -61,19 +65,31 @@ function loadDOMList(list: DataList): void {
 
   titleSection.textContent = list.name;
 
-  list.downloads.slice(countStart, countEnd).forEach((item) => {
+  list.downloads.slice(0, countEnd).forEach((item) => {
     const name = document.createElement("h3");
 
     name.textContent = `${item.title} \ ${item.fileSize}`;
 
     container.appendChild(name);
   });
+
+  dataList.downloads = list.downloads;
 }
 
 window.addEventListener("scroll", () => {
-  const winHeight: number = document.body.clientHeight;
-  const rect = document.body.getBoundingClientRect().top;
-  console.log(rect);
+  // Usa o getBoundClientRect para calcular quando a tela chega ao final
+  // logo em seguida adiciona mais itens
+  const container = document.getElementById("container") as HTMLDivElement;
+  const rect = container.getBoundingClientRect();
 
-  console.log(winHeight);
+  // Verifica se chegou ao final
+  if (rect.bottom == window.innerHeight) {
+    // Divide o total pelo numero de itens criados por vez
+    let countMax = Math.floor(dataList.downloads.length / 14);
+
+    if (countEnd < countMax) {
+      countEnd += 14;
+      loadDOMList(dataList);
+    }
+  }
 });

@@ -10,7 +10,11 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 // Limitar quantidade de itens por vez
-let countStart = 0, countEnd = 21;
+let countEnd = 42;
+let dataList = {
+    name: "",
+    downloads: [],
+};
 inputUrl();
 // Verifica se os dados segue o padrão  ou se esta vazio
 function inputUrl() {
@@ -48,15 +52,25 @@ function loadDOMList(list) {
     const container = document.getElementById("container");
     const titleSection = document.getElementById("name_list");
     titleSection.textContent = list.name;
-    list.downloads.slice(countStart, countEnd).forEach((item) => {
+    list.downloads.slice(0, countEnd).forEach((item) => {
         const name = document.createElement("h3");
         name.textContent = `${item.title} \ ${item.fileSize}`;
         container.appendChild(name);
     });
+    dataList.downloads = list.downloads;
 }
 window.addEventListener("scroll", () => {
-    const winHeight = document.body.clientHeight;
-    const rect = document.body.getBoundingClientRect().top;
-    console.log(rect);
-    console.log(winHeight);
+    // Usa o getBoundClientRect para calcular quando a tela chega ao final
+    // logo em seguida adiciona mais itens
+    const container = document.getElementById("container");
+    const rect = container.getBoundingClientRect();
+    // Verifica se chegou ao final
+    if (rect.bottom == window.innerHeight) {
+        // Divide o total pelo numero de itens criados por vez
+        let countMax = Math.floor(dataList.downloads.length / 14);
+        if (countEnd < countMax) {
+            countEnd += 14;
+            loadDOMList(dataList);
+        }
+    }
 });
