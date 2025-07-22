@@ -7,9 +7,44 @@
     <link rel="stylesheet" href="src/style/main.css" />
   </head>
   <body>
-    <div id="container">
-      <h1 id="name_list">Sem Lista</h1>
-    </div>
+    <header>
+      <nav class="navbar">
+        <div class="navbar-top">
+          <a href="index.html"><h1 id="name_list">Sem Lista</h1></a>
+          <div class="input-area">
+            <input
+              type="text"
+              name="search"
+              id="input_url"
+              placeholder="url"
+              required
+            />
+            <button type="button" onclick="inputUrl()">Carregar</button>
+          </div>
+        </div>
+        <div class="navbar-bottom">
+          <ul>
+            <li><a href="index.html">Resetar</a></li>
+            <li>Ajuda</li>
+            <li>
+              <div class="dropdown">
+                Salvos <i class="fi fi-rr-angle-small-down"></i>
+                <div class="dropdown-open">Fitgirl</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <section id="home">
+        <div class="home-header">
+          <p id="file_count">--.--</p>
+        </div>
+        <div id="container"></div>
+      </section>
+    </main>
+
     <script src="dist/main.js"></script>
   </body>
 </html>

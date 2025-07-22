@@ -12,26 +12,25 @@ interface DataList {
   downloads: item[];
 }
 
-// Limitar quantidade de itens por vez
+// Limita quantidade de itens por vez
 let countEnd: number = 42;
 
+// Transforma o objeto retornado para ser usado globalmente
 let dataList: DataList = {
   name: "",
   downloads: [],
 };
 
-inputUrl();
-
 // Verifica se os dados segue o padrão  ou se esta vazio
 function inputUrl(): void {
-  //   const input = document.getElementById("input_url") as HTMLInputElement;
-  //   const inputValue = input.value;
+  const input = document.getElementById("input_url") as HTMLInputElement;
+  const inputValue = input.value;
 
-  //   if (inputValue.length == 0 && !inputValue.includes(".json")) {
-  //     return;
-  //   }
+  if (inputValue.length == 0 && !inputValue.includes(".json")) {
+    return;
+  }
 
-  loadData("https://hydralinks.pages.dev/sources/fitgirl.json");
+  loadData(inputValue);
 }
 
 // Expressão usada para carregar dados de um json via texto de entrada
@@ -62,18 +61,46 @@ async function loadData(url: string): Promise<void> {
 function loadDOMList(list: DataList): void {
   const container = document.getElementById("container") as HTMLDivElement;
   const titleSection = document.getElementById("name_list") as HTMLTitleElement;
+  const txtCount = document.getElementById("file_count") as HTMLDivElement;
 
   titleSection.textContent = list.name;
+  txtCount.innerHTML = `total de ${list.downloads.length}`;
 
   list.downloads.slice(0, countEnd).forEach((item) => {
+    const div = document.createElement("div");
+    const fig = document.createElement("figure");
+    const figc = document.createElement("figcaption");
+
+    const img = document.createElement("img");
+    img.src = "../assets/img/sem_image.png";
+
     const name = document.createElement("h3");
+    name.textContent = `${item.title}`;
 
-    name.textContent = `${item.title} \ ${item.fileSize}`;
+    const prg = document.createElement("p");
 
-    container.appendChild(name);
+    const date = document.createElement("span");
+    date.textContent = `${item.uploadDate
+      .replaceAll("-", "/")
+      .replaceAll("T", " ")
+      .replaceAll("Z", "")
+      .replaceAll(".", "")
+      .replaceAll("000", "")}`;
+
+    const size = document.createElement("span");
+    size.textContent = `${item.fileSize}`;
+
+    prg.appendChild(date);
+    prg.appendChild(size);
+    figc.appendChild(name);
+    figc.appendChild(prg);
+    fig.appendChild(figc);
+    // fig.appendChild(img);
+    div.appendChild(fig);
+    container.appendChild(div);
   });
 
-  dataList.downloads = list.downloads;
+  dataList = list;
 }
 
 window.addEventListener("scroll", () => {
@@ -83,7 +110,7 @@ window.addEventListener("scroll", () => {
   const rect = container.getBoundingClientRect();
 
   // Verifica se chegou ao final
-  if (rect.bottom == window.innerHeight) {
+  if (rect.bottom <= window.innerHeight) {
     // Divide o total pelo numero de itens criados por vez
     let countMax = Math.floor(dataList.downloads.length / 14);
 

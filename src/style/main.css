@@ -1,5 +1,199 @@
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css");
+
+html,
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-family: "Source Sans 3", sans-serif;
+}
+
+:root {
+  --color-title: #d1d2d8;
+  --color-prg: #989caa;
+  --bg: #0c1821;
+  --border: #15232e;
+}
+
+body {
+  background-color: var(--bg);
+  font-size: 0.9;
+}
+
+a,
+p,
+input,
+ul li {
+  text-decoration: none;
+  color: var(--color-prg);
+  font-weight: 400;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Work Sans", sans-serif;
+  font-weight: 500;
+  color: var(--color-title);
+}
+
+i {
+  display: flex;
+  transition: transform 200ms;
+}
+
+button,
+input {
+  border: 0;
+  outline: 0;
+  cursor: pointer;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.navbar .navbar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 25%;
+  border-bottom: 0.5px solid var(--border);
+}
+
+.navbar .navbar-top .input-area input {
+  padding: 0.3rem 0.5rem;
+  width: 300px;
+  border-radius: 0.2rem;
+  background-color: var(--border);
+}
+
+.navbar .navbar-top .input-area button {
+  padding: 0.3rem 1.5rem;
+  border-radius: 0.2rem;
+  font-weight: bold;
+  background-color: rgba(39, 52, 105, 0.384);
+  border: 1px solid rgb(39, 52, 105);
+  color: var(--color-prg);
+}
+
+.navbar .navbar-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+.navbar .navbar-bottom ul {
+  display: flex;
+  position: relative;
+}
+
+.navbar .navbar-bottom ul li {
+  padding: 0.2rem 1rem;
+  border: 1px solid var(--border);
+  border-top: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.navbar .navbar-bottom ul li .dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.navbar .navbar-bottom ul li:hover .dropdown .dropdown-open {
+  display: flex;
+}
+
+.navbar .navbar-bottom ul li:hover .dropdown:hover i {
+  transform: rotate(180deg);
+}
+
+.navbar .navbar-bottom ul li .dropdown-open {
+  display: none;
+  position: absolute;
+  bottom: calc(-100% + -0.2rem);
+  left: 60%;
+  background-color: var(--border);
+  width: auto;
+  padding: 0.2rem 1rem;
+
+  transition: opacity 300ms;
+}
+
+.navbar .navbar-bottom ul li:hover {
+  background-color: var(--border);
+}
+
+#home .home-header {
+  display: flex;
+  justify-content: end;
+  padding: 0.5rem 5%;
+  border-bottom: 1px solid var(--border);
+}
+
+#home .home-header p {
+  font-size: 1em;
+}
+
+#container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 5%;
+}
+
+#container > div {
+  width: calc(16.66% - 1rem);
+  border: 1px solid var(--border);
+}
+
+#container figure {
+  width: 100%;
+  height: 400px;
+  position: relative;
+  cursor: pointer;
+}
+
+#container figure img {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  position: absolute;
+  object-fit: cover;
+  transition: scale 300ms;
+}
+
+#container figure img:hover {
+  scale: 1.01;
+}
+
+#container figure figcaption {
+  width: 100%;
+  height: auto;
+  padding: 0.2rem 0.4rem;
+  background-color: rgba(21, 35, 46, 0.2);
+  backdrop-filter: blur(2px);
+  position: absolute;
+  bottom: 0.2rem;
+}
+
+#container figure figcaption h3 {
+  font-size: 1em;
+  letter-spacing: -0.5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+#container figure figcaption p {
+  font-size: 0.8em;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
 }
